@@ -11,7 +11,7 @@
     <!-- Version model of POM being used. 4.0.0 matches Maven 2 and 3  -->
     <modelVersion>4.0.0</modelVersion>
 
- *     
+      
         * Group ID contains the unique ID for organization/project
         *
         * Artifact ID contains the name of the project. Also used
@@ -30,12 +30,12 @@
     <artifactId>MavenLearning</artifactId>
     <version> 1.0-SNAPSHOT </version> 
 
-*
-        * > Contains all dependencies of a project <
-        *
-        * Maven downloads each dependency that is needed and puts them in my local repository.
+
+   ###Dependencies / General info
+        
+        * Maven downloads each dependency that is needed and puts them in your local repository.
         *   If those libraries have libraries, then those other libraries are also downloaded to
-        *   to my local Maven repository.
+        *   to your local Maven repository.
         *
         * Dependency elements are described by a few thing that describe an external library. Tags
         *   that were not defined in this scope were already defined and do the same thing as the
@@ -62,32 +62,31 @@
         *   depends on another dependency. When that's the case, it has a transitive dependency on
         *   the other dependency.
         *
-        * > Excluding Dependencies <
-        *
+   ##### Excluding Dependencies
+        
         * Primary usage for external dependencies is related to dependency clashing. Occasionally direct dependencies
         *   of a project clash with transistive directories and when this is the case, you can simply exclude the
         *   unwanted dependency (the legacy version)
-        *
-        *   > An example of dependency exclusion <
-        *
-        *   <dependency>
-        *       <groupId>example.jaxrs</groupId>
-        *     <artifactId>JAX-RS-TOOLKIT</artifactId>
-        *     <version>1.0</version>
-        *     <scope>compile</scope>
-        *     <exclusions>
-        *       <exclusion>
-        *         <groupId>com.fasterxml.jackson.core</groupId>
-        *         <artifactId>jackson-core</artifactId>
-        *       </exclusion>
-        *     </exclusions>
-        *   </dependency>
-        *
+        
+   ##### An example of dependency exclusion 
+        
+           <dependency>
+               <groupId>example.jaxrs</groupId>
+             <artifactId>JAX-RS-TOOLKIT</artifactId>
+             <version>1.0</version>
+             <scope>compile</scope>
+             <exclusions>
+               <exclusion>
+                 <groupId>com.fasterxml.jackson.core</groupId>
+                 <artifactId>jackson-core</artifactId>
+               </exclusion>
+             </exclusions>
+           </dependency>
+        
 
-*
 
-        * > External Dependencies <
-        *
+
+   ### External Dependencies
         * An external dependency in Maven is a dependency (JAR file) which is not located in a Maven
         *   repository (not local, remote, or central) It could be located in the local disk, such as
         *   in the lib directory of a webapp or unaffiliated folder or something. The word external refers
@@ -106,7 +105,7 @@
         *
         * * ${basedir} is a pointer to the directory where the POM is located.
         
-*
+
     <dependencies>
 
         <!--This adds the Spigot API artifact to the build -->
@@ -118,17 +117,19 @@
         </dependency>
 
     </dependencies>
-*
 
-        * > Maven Repositories <
-        *
+
+
+
+   ### Maven Repositories
+        
         * Maven Repositories are directories of packaged JAR files with extra meta data. The meta data are POM
         *   files describing the projects each packaged jar file belongs to, including what external dependencies
         *   each packaged JAR has. This is the meta data that enables Maven to download dependencies of your
         *   dependencies recursively until all dependencies in the tree are downloaded and put into your
         *   local repository.
-        *
-        * > Repository Types <
+        
+   #### Repository Types 
         *
         * Local Repository: A local repository on the developer's computer. Contains all dependencies Maven downloads.
         *   A single Maven repository is typically used for several different projects and only needs to download the
@@ -160,17 +161,19 @@
         *
         * > Configuring a remote repository in the POM file <
         *
-        *   <repositories>
-        *      <repository>
-        *          <id>jenkov.code</id>
-        *          <url>http://maven.jenkov.com/maven2/lib</url>
-        *      </repository>
-        *   </repositories>
-        *
+        * Example:
+        
+           <repositories>
+              <repository>
+                  <id>jenkov.code</id>
+                  <url>http://maven.jenkov.com/maven2/lib</url>
+              </repository>
+           </repositories>
+        
  
-
  
-        * Maven Build Life Cycles:
+ 
+   ### Maven Build Life Cycles:
         *   When Maven builds a software project it follows a build cycle that is divided into build phases and those
         *   build phases are divided into build goals. Maven has 3 built-in build cycles: Default, Clean, and Site.
         *   Each cycle takes care of a different aspect of building a software project, therefore each of these cycles
@@ -221,46 +224,48 @@
         *   none at all. If a goal is not build to any build phase, you cna only execute it by passing the name of the
         *   goal to the mvn command. If a goal is bound to multiple build phases, that goal will get executed during
         *   each of the build phases it has been bound to.
-        *
-  
 
   
-        * | - - > Maven Build Profiles < - - |
-        *
+
+
+
+  ### Maven Build Profiles 
+
+        
         * Maven build profiles allow you to build your own project using different configurations. Instead of creating
         *   two separate POM files, you can just specify a profile with the different build configuration and build
         *   your project with this build configuration when needed.
         *
         * Maven build profiles are specified inside of the POM file, inside of the profile's element. Each build
-        *   profile is nested inside a profile element. Example:
-  
-        *
-        *   <project xmlns="http://maven.apache.org/POM/4.0.0"
-        *             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        *             xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-        *       http://maven.apache.org/xsd/maven-4.0.0.xsd">
-        *      <modelVersion>4.0.0</modelVersion>
-        *
-        *     <groupId>com.jenkov.crawler</groupId>
-        *     <artifactId>java-web-crawler</artifactId>
-        *     <version>1.0.0</version>
-        *      <profiles>
-        *           <profile>
-        *              <id>test</id>
-        *              <activation>...</activation>
-        *              <build>...</build>
-        *             <modules>...</modules>
-        *              <repositories>...</repositories>
-        *              <pluginRepositories>...</pluginRepositories>
-        *              <dependencies>...</dependencies>
-        *              <reporting>...</reporting>
-        *              <dependencyManagement>...</dependencyManagement>
-        *              <distributionManagement>...</distributionManagement>
-        *         </profile>
-        *     </profiles>
-        *
-        *    </project>
-  *
+        *   profile is nested inside a profile element. 
+        *   
+        *  Example:
+        
+           <project xmlns="http://maven.apache.org/POM/4.0.0"
+                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+               http://maven.apache.org/xsd/maven-4.0.0.xsd">
+              <modelVersion>4.0.0</modelVersion>
+        
+             <groupId>com.jenkov.crawler</groupId>
+             <artifactId>java-web-crawler</artifactId>
+             <version>1.0.0</version>
+              <profiles>
+                   <profile>
+                      <id>test</id>
+                      <activation>...</activation>
+                      <build>...</build>
+                     <modules>...</modules>
+                      <repositories>...</repositories>
+                      <pluginRepositories>...</pluginRepositories>
+                      <dependencies>...</dependencies>
+                      <reporting>...</reporting>
+                      <dependencyManagement>...</dependencyManagement>
+                      <distributionManagement>...</distributionManagement>
+                 </profile>
+             </profiles>
+        
+            </project>
 
         * As you can see, a build profile describes what changes should be made to the POM file when executing
         *   under that build profile. This could be changing the application's configuration file to use etc.
@@ -272,11 +277,11 @@
         *   settings.xml file, which is where you can set the active profile. Another way is add -P profile-name to
         *   the Maven command line.
         *
-        * > Maven Plugins <
-        *
+  ### > Maven Plugins 
+        
         * Maven plugins give you the ability to add your own actions to the build process, which can be done by
         *   creating a simple java class that extends a special Maven class and then create a POM file for the
         *   project. The plugin should be located in its own project.
-        *
+        
   
 
