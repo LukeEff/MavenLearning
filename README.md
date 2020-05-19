@@ -31,7 +31,7 @@
     <version> 1.0-SNAPSHOT </version> 
 
 
-   ###Dependencies / General info
+   ### Dependencies / General info
         
         * Maven downloads each dependency that is needed and puts them in your local repository.
         *   If those libraries have libraries, then those other libraries are also downloaded to
@@ -277,7 +277,7 @@
         *   settings.xml file, which is where you can set the active profile. Another way is add -P profile-name to
         *   the Maven command line.
         *
-  ###Maven Plugins 
+  ### Maven Plugins 
         
         * Maven plugins give you the ability to add your own actions to the build process, which can be done by
         *   creating a simple java class that extends a special Maven class and then create a POM file for the
